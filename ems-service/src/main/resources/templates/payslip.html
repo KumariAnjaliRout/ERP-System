@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+        body{font-family:Arial;}
+        table{width:100%;border-collapse:collapse;}
+        td,th{border:1px solid black;padding:7px;}
+        .center{text-align:center;}
+        .bold{font-weight:bold;}
+    </style>
+</head>
+
+<body>
+
+<h2 class="center">${companyName}</h2>
+<h3 class="center">Salary Slip for ${salaryMonth}</h3>
+
+<table>
+    <tr>
+        <td>Name: ${employeeName}</td>
+        <td>Email: ${email}</td>
+    </tr>
+
+    <tr>
+        <td>Designation: ${designation}</td>
+        <td>Employee ID: ${employeeId}</td>
+    </tr>
+</table>
+
+<br/>
+
+<table>
+    <tr>
+        <th>Earnings</th>
+        <th>Amount</th>
+        <th>Deductions</th>
+        <th>Amount</th>
+    </tr>
+
+    <tr><td>Basic</td><td>${basic}</td><td>PF</td><td>${pf}</td></tr>
+    <tr><td>HRA</td><td>${hra}</td><td>Professional Tax</td><td>${professionalTax}</td></tr>
+    <tr><td>Travel</td><td>${travelAllowance}</td><td></td><td></td></tr>
+    <tr><td>Medical</td><td>${medicalAllowance}</td><td></td><td></td></tr>
+    <tr><td>Shift</td><td>${shiftAllowance}</td><td></td><td></td></tr>
+    <tr><td>Other</td><td>${otherAllowance}</td><td></td><td></td></tr>
+
+    <tr>
+        <td class="bold">Gross Salary</td>
+        <td>${grossSalary}</td>
+        <td class="bold">Total Deduction</td>
+        <td>${totalDeduction}</td>
+    </tr>
+
+    <tr>
+        <td colspan="2"></td>
+        <td class="bold">Net Salary</td>
+        <td>${netSalary}</td>
+    </tr>
+</table>
+
+<br/>
+
+<table>
+    <tr>
+        <th>Total Days</th>
+        <th>Present</th>
+        <th>Half Days</th>
+        <th>Absent</th>
+    </tr>
+
+    <tr>
+        <td>${totalDays}</td>
+        <td>${presentDays}</td>
+        <td>${halfDays}</td>
+        <td>${absentDays}</td>
+    </tr>
+</table>
+
+</body>
+</html>

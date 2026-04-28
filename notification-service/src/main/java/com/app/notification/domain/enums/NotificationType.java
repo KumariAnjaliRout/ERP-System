@@ -1,0 +1,48 @@
+package com.app.notification.domain.enums;
+
+public enum NotificationType {
+
+    /* ================= EMS ================= */
+
+    EMPLOYEE_CREATED,
+    EMPLOYEE_DEACTIVATED,
+
+    LEAVE_REQUEST,
+    LEAVE_APPROVED,
+    LEAVE_REJECTED,
+    LEAVE_UPDATED,
+    LEAVE_CANCELLED,
+
+    ATTENDANCE_MARKED,
+
+    SALARY_STRUCTURE_CREATED,
+    SALARY_STRUCTURE_UPDATED,
+    SALARY_STRUCTURE_APPROVED,
+    SALARY_STRUCTURE_REJECTED,
+    SALARY_STRUCTURE_DELETED,
+
+    PAYROLL_GENERATED,
+    PAYSLIP_GENERATED,
+    SALARY_PAID,
+
+
+    /* ================= INVENTORY ================= */
+    PRODUCT_PRICE_UPDATED,
+    PRODUCT_OUT_OF_STOCK,
+    PRODUCT_BACK_IN_STOCK,
+
+    /* ================= ORDER ================= */
+
+    CATEGORY_CREATED,
+    ORDER_CREATED,
+    ORDER_APPROVED,
+    ORDER_REJECTED,
+    ORDER_DISPATCHED,
+    ORDER_DELIVERED,
+
+    /* ================= TICKETING ================= */
+
+    TICKET_CREATED,
+    TICKET_STATUS_UPDATED,
+    TICKET_ESCALATED_TO_SUPER_ADMIN
+}

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8"/>
+    <title>Invoice</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            font-size:12px;
+            margin:20px;
+            color:#333;
+        }
+
+        .divider{
+         border-top:2px solid #444;
+         margin:15px 0 20px 0;
+       }
+
+        /* MAIN CONTAINER */
+
+        .container{
+            width:650px;
+            margin:0 auto;
+        }
+
+        /* HEADER */
+
+        .header{
+            text-align:center;
+            margin-bottom:25px;
+        }
+
+        .company{
+            font-size:22px;
+            font-weight:bold;
+        }
+
+        .subtitle{
+            font-size:14px;
+            color:#555;
+        }
+
+        /* TABLE BASE */
+
+        table{
+            width:650px;
+            border-collapse:collapse;
+        }
+
+        /* TEXT ALIGN */
+
+        .right{ text-align:right; }
+        .center{ text-align:center; }
+
+        /* INVOICE INFO */
+
+        .info-table td{
+            border:none;
+            padding:4px;
+        }
+
+        /* ADDRESS */
+
+        .address-table{
+            margin-top:20px;
+        }
+
+        .address-table th{
+            border:1px solid #444;
+            background:#f2f2f2;
+            padding:8px;
+            text-align:left;
+        }
+
+        .address-table td{
+            border:1px solid #444;
+            padding:10px;
+        }
+
+        /* PRODUCT TABLE */
+
+        .product-table{
+            margin-top:20px;
+        }
+
+        .product-table th{
+            border:1px solid #444;
+            background:#f2f2f2;
+            padding:8px;
+        }
+
+        .product-table td{
+            border:1px solid #444;
+            padding:8px;
+        }
+
+        /* SUMMARY */
+
+        .summary-table{
+            width:260px;
+            margin-top:15px;
+            margin-left:auto;
+        }
+
+        .summary-table td{
+            border:1px solid #444;
+            padding:8px;
+        }
+
+        .summary-label{
+            background:#f2f2f2;
+            font-weight:bold;
+        }
+
+        .total-row{
+            font-weight:bold;
+        }
+
+        .total-label{
+            background:#e6e6e6;
+        }
+
+        /* FOOTER */
+
+        .footer{
+            margin-top:40px;
+            text-align:center;
+            font-size:11px;
+            color:#666;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+        <div class="company">Inventory Management System</div>
+        <div class="subtitle">Purchase Invoice</div>
+    </div>
+
+    <div class="divider"></div>
+
+
+
+    <!-- INVOICE DETAILS -->
+
+    <table class="info-table">
+
+        <tr>
+            <td><b>Invoice No:</b> <span th:text="${invoiceNo}"></span></td>
+            <td class="right"><b>Invoice Date:</b> <span th:text="${invoiceDate}"></span></td>
+        </tr>
+
+        <tr>
+            <td><b>Order ID:</b> <span th:text="${order.id}"></span></td>
+            <td class="right">
+                <b>Order Date:</b>
+                <span th:text="${#temporals.format(order.createdAt,'dd-MM-yyyy HH:mm')}"></span>
+            </td>
+        </tr>
+
+    </table>
+
+    <!-- BILL / SHIP -->
+
+    <table class="address-table">
+
+        <tr>
+            <th>Bill To</th>
+            <th>Ship To</th>
+        </tr>
+
+        <tr>
+
+            <td>
+                <b>Org ID:</b> <span th:text="${organization.id}"></span><br/>
+                <span th:text="${organization.name}"></span><br/>
+                <span th:text="${organization.address}"></span>
+            </td>
+
+            <td>
+                <b>Outlet ID:</b> <span th:text="${outlet.id}"></span><br/>
+                <span th:text="${outlet.name}"></span><br/>
+                <span th:text="${outlet.address}"></span>
+            </td>
+        </tr>
+
+    </table>
+
+    <!-- PRODUCT TABLE -->
+
+    <table class="product-table">
+
+        <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Discount (%)</th>
+            <th>Tax (%)</th>
+            <th>Total</th>
+        </tr>
+
+        <tr th:each="item : ${items}">
+
+            <td th:text="${item.product.id}"></td>
+
+            <td th:text="${item.productName}"></td>
+
+            <td class="center" th:text="${item.quantity}"></td>
+
+            <td class="right">
+                Rs. <span th:text="${#numbers.formatDecimal(item.unitPrice,1,2)}"></span>
+            </td>
+
+            <td class="right" th:text="${item.discount != null ? item.discount : 0}"></td>
+            <td class="right" th:text="${item.tax != null ? item.tax : 0}"></td>
+
+            <td class="right">
+                Rs. <span th:text="${#numbers.formatDecimal(item.totalPrice,1,2)}"></span>
+            </td>
+
+        </tr>
+
+    </table>
+
+    <!-- SUMMARY -->
+
+    <table class="summary-table">
+
+        <tr>
+            <td class="summary-label right">Subtotal</td>
+            <td class="right">
+                Rs. <span th:text="${#numbers.formatDecimal(subtotal,1,2)}"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="summary-label right">Discount</td>
+            <td class="right">
+                Rs. <span th:text="${#numbers.formatDecimal(totalDiscount,1,2)}"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="summary-label right">GST</td>
+            <td class="right">
+                Rs. <span th:text="${#numbers.formatDecimal(gstTotal,1,2)}"></span>
+            </td>
+        </tr>
+
+        <tr class="total-row">
+            <td class="total-label right">Total</td>
+            <td class="right">
+                Rs. <span th:text="${#numbers.formatDecimal(totalAmount,1,2)}"></span>
+            </td>
+        </tr>
+
+    </table>
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+        System generated invoice – No signature required
+    </div>
+
+</div>
+
+</body>
+
+</html>

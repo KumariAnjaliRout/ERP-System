@@ -1,0 +1,64 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: notification-service
+  cache:
+    type:caffeine
+  datasource:
+    url: jdbc:postgresql://ep-square-moon-a1p4e7fr-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+    username: neondb_owner
+    password: npg_B8QVRPzW0Ioy
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true  #simple one line sql
+    properties:
+      hibernate:
+        default_schema: erp
+        format_sql: false #disable multiline sql
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+    web:
+      resources:
+        add-mappings: false
+
+aws:
+  region: ap-south-1
+  sns:
+    platform-arn: arn:aws:sns:ap-south-1:040533191763:app/GCM/erp-fcm-android
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+
+jwt:
+  secret: "bXlTdXBlclNlY3JldEtleVRoYXRJc0F0TGVhc3QzMkNoYXJhY3RlcnNMb25nIQ=="
+
+frontend:
+  base:
+    url: http://localhost:8081
+
+services:
+  auth:
+    url: http://localhost:8080
+
+internal:
+  api:
+    secret: "3f8$Kx#mP2@nQ7vL9wR4jT6yU1zB5cD0"
+
+logging:
+  level:
+    root: INFO
+    com.erp: DEBUG
+    org.springframework: INFO
+    org.hibernate.type.descriptor.sql: OFF

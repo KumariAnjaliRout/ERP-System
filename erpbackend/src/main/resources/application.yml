@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: erp-system
+  profiles:
+    active: dev
+  datasource:
+    url: your_postgresql_url_here
+    username: your_db_username_here
+    password: your_db_password_here
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: erp
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  security:
+    user:
+      name: admin
+      password: your_admin_password_here
+
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+server:
+  port: 8080
+  address: 0.0.0.0
+
+jwt:
+  secret: "your_jwt_secret_here"
+  expiration-ms: 8600000
+  refresh-expiration-ms: 604800000
+  issuer: "erp-system"
+
+internal:
+  api:
+    secret: "your_internal_api_secret_here"
+
+logging:
+  level:
+    com.erp: INFO
+    org.springframework.security: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
